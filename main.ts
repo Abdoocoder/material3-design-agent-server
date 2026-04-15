@@ -1,5 +1,4 @@
 import { createMcpExpressApp } from "@modelcontextprotocol/sdk/server/express.js";
-import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import cors from "cors";
@@ -41,12 +40,13 @@ export async function startStreamableHTTPServer(): Promise<void> {
     }
   });
 
-  const httpServer = app.listen(port, (err) => {
-    if (err) {
-      console.error("Failed to start server:", err);
-      process.exit(1);
-    }
+  const httpServer = app.listen(port, () => {
     console.log(`Material 3 Design Agent listening on http://localhost:${port}/mcp`);
+  });
+
+  httpServer.on("error", (err: any) => {
+    console.error("Failed to start server:", err);
+    process.exit(1);
   });
 
   const shutdown = () => {

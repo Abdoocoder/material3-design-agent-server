@@ -52,7 +52,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
     if (!review.colorScheme.includes("primary") && !review.colorScheme.includes("secondary")) {
       findings.push({
         title: "Color System",
-        severity: "warning",
+        severity: "warning" as const,
         message: "Color scheme should follow Material 3 primary and secondary colors",
         suggestion: "Use the Material 3 color system with primary, secondary, and tertiary colors"
       });
@@ -65,7 +65,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
     if (!review.typography.includes("headline") && !review.typography.includes("body")) {
       findings.push({
         title: "Typography",
-        severity: "warning",
+        severity: "warning" as const,
         message: "Should use Material 3 typography scale (headline, title, body, label)",
         suggestion: "Apply Material 3 typography styles: headline, title, body, or label"
       });
@@ -74,7 +74,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
   } else {
     findings.push({
       title: "Typography",
-      severity: "info",
+      severity: "info" as const,
       message: "No typography details provided",
       suggestion: "Specify typography choices for better review"
     });
@@ -86,7 +86,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
         !review.accessibility.toLowerCase().includes("aria")) {
       findings.push({
         title: "Accessibility",
-        severity: "warning",
+        severity: "warning" as const,
         message: "Ensure WCAG 2.1 AA compliance and proper ARIA labels",
         suggestion: "Implement ARIA labels, proper contrast ratios (4.5:1 for text), and keyboard navigation"
       });
@@ -95,7 +95,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
   } else {
     findings.push({
       title: "Accessibility",
-      severity: "warning",
+      severity: "warning" as const,
       message: "No accessibility information provided",
       suggestion: "Include accessibility features: ARIA labels, keyboard support, color contrast"
     });
@@ -107,7 +107,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
     if (!review.spacing.includes("8") && !review.spacing.includes("4")) {
       findings.push({
         title: "Spacing System",
-        severity: "info",
+        severity: "info" as const,
         message: "Consider using Material 3 8dp or 4dp base spacing grid",
         suggestion: "Align to Material 3 spacing scale (4dp, 8dp, 16dp, 24dp, 32dp...)"
       });
@@ -120,7 +120,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
         !review.interactivity.toLowerCase().includes("animation")) {
       findings.push({
         title: "Interactions",
-        severity: "info",
+        severity: "info" as const,
         message: "Consider Material 3 motion guidelines",
         suggestion: "Add smooth transitions and ripple effects for interactive elements"
       });
@@ -143,7 +143,7 @@ function analyzeDesign(review: DesignReview): ReviewResult {
   if (findings.length === 0) {
     findings.push({
       title: "Overall Quality",
-      severity: "info",
+      severity: "info" as const,
       message: "Design review looks comprehensive and well-structured"
     });
   }
@@ -175,9 +175,9 @@ export function createServer(): McpServer {
     server,
     "review_design",
     {
-      displayName: "Review Material 3 Design",
+      title: "Review Material 3 Design",
       description: "Review a UI component design for Material 3 compliance, accessibility, and best practices",
-      inputSchema: DesignReviewSchema.strict(),
+      inputSchema: DesignReviewSchema.shape,
       _meta: {
         ui: { resourceUri } // Links this tool to its UI resource
       }
